@@ -2,9 +2,14 @@ const express = require('express');
 const app = express();
 const PORT = 3000;
 const logger = require('./logger');
+const authorize = require('./authorize');
+const morgan = require('morgan');
 
 // req => middleware => res
-app.use('/api', logger);
+
+// app.use([authorize, logger])
+// app.use(express.static('./public'))
+app.use(morgan('tiny'));
 
 app.get('/', (req, res) => {
     res.send('Home');
@@ -19,6 +24,7 @@ app.get('/api/products', (req, res) => {
 })
 
 app.get('/api/items', (req, res) => {
+    console.log(req.query);
     res.send('Items');
 })
 
